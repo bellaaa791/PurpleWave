@@ -19,7 +19,6 @@ module.exports = {
           },
         }
       );
-      console.log(apikey)
 
       const data = response.data;
 

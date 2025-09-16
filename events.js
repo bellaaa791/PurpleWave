@@ -135,6 +135,7 @@ reject(err);
 }
 });
 
+lerConfig();
 global.ctx = {
 bot,
 info: null,
