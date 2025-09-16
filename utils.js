@@ -106,7 +106,7 @@ fs.existsSync(sessionDir) && fs.readdirSync(sessionDir).length > 0;
 let numero = null;
 if (!temSessao) {
 numero = await perguntar(
-"📲 Digite seu número (DDD + número, sem espaços, ex.: 559885079553): "
+"📲 Digite seu número (DDD + número, sem espaços, ex.: 553285076326): "
 );
 } else {
 mensagemSucesso(
