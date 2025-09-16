@@ -147,6 +147,7 @@ enviar: null,
 isGroup: null,
 menc_os2: null,
 isBotGroupAdmins: null,
+// agora são funções que leem sempre na hora
 get resposta() {
 return lerJSON("respostas.json");
 },
