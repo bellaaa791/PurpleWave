@@ -69,20 +69,20 @@ process.exit(1);
 const configPath = path.join(__dirname, "./json/config.json");
 
 let configCache = {};
+
 function lerConfig() {
 if (fs.existsSync(configPath)) {
 try {
-const raw = fs.readFileSync(configPath, "utf8");
-if (raw.trim() === "") throw new Error("Arquivo config.json vazio");
-
-configCache = JSON.parse(raw);
+configCache = JSON.parse(fs.readFileSync(configPath, "utf8"));
 } catch (err) {
-console.error("Erro ao ler config:", err.message);
+console.error("Erro ao ler config:", err);
 }
 }
 return configCache;
 }
 
+
+lerConfig();
 
 
 fs.watch(configPath, (eventType) => {
