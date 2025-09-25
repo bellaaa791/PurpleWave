@@ -358,76 +358,15 @@ O entretenimento que você sempre quis está chegando! Acesso **GRATUITO** a Fil
 
 </div>
 
+<details open>
+<summary><h3>👑 <strong>Atualize e instale dependências no TERMux</strong></h3></summary>
+
 ```bash
-#!/bin/bash
-
-# 1️⃣ Atualize e instale dependências no TERMux
-pkg update -y && pkg upgrade -y
-pkg install git -y
-pkg install nodejs-lts -y
-pkg install ffmpeg -y
-
-# 2️⃣ Permita que o TERMux acesse seus arquivos
-termux-setup-storage
-
-# 3️⃣ Entre na pasta onde o bot ficará
-cd /sdcard || exit
-
-# 4️⃣ Baixe o bot
-git clone https://github.com/bellaaa791/PurpleWave.git
-
-# 5️⃣ Entre na pasta do bot
-cd /sdcard/PurpleWave || exit
-
-# 6️⃣ Configure o bot
-echo "Abra o arquivo ./json/config.json em um editor de texto e configure suas opções:
-{
-  \"criador\": \"⚝Tokyo🐈‍⬛\",
-  \"prefix\": \"}\",
-  \"prefixo\": true,
-  \"bot\": \"PurpleWave∿\",
-  \"criadorNumber\": \"553285076326\",
-  \"urlapi\": \"https://hobsidian.shop\",
-  \"apikey\": \"tokyo30tokyo\",
-  \"botoff\": true
-}
-Dicas:
-- 'criador': coloque seu nome entre aspas.
-- 'prefix': caractere para identificar comandos (ex: /menu)
-- 'prefixo': true = comandos com prefixo, false = sem prefixo
-- 'criadorNumber': seu número, para comandos especiais
-- 'urlapi': não alterar
-- 'apikey': sua chave da API
-- 'botoff': true = só responde o dono, false = responde todos
-"
-
-# 7️⃣ Inicie o bot
-npm start
-<img width="80%" src="http://uploader.hobsidian.shop/uploads/1758419979665-71514961.jpg" alt="PurpleWave Imagem" style="margin-top: 20px; border-radius: 10px;"/>
-# 8️⃣ Mensagem de instrução
-echo "📱 Conecte seu número ao WhatsApp e aproveite o bot!"
-echo "Se você já configurou sua API-key, basta digitar 3 e pressionar ENTER."
+pkg update -y && pkg upgrade -y & pkg install git -y & pkg install nodejs-lts -y & pkg install ffmpeg -y
 ```
 
----
+</details>
 
-## 🔧 **Configuração**
-
-<details>
-<summary><strong>📝 Arquivo .json</strong></summary>
-
-```.json
-{
-  "criador": "⚝Tokyo🐈‍⬛", // (Obrigatório) Nome ou apelido do criador do bot. Pode usar emojis.
-  "prefix": "!", // (Obrigatório) O símbolo que ativa os comandos do bot (ex: !comando, .comando, #comando).
-  "prefixo": true, // (Obrigatório) Se o bot deve ou não usar um prefixo. Deixe `true` para sim, `false` para comandos sem prefixo (geralmente responde apenas a mensagens que começam com o nome do bot).
-  "bot": "PurpleWave∿", // (Obrigatório) Nome do seu bot. Pode usar emojis.
-  "criadorNumber": "559884793058", // (Obrigatório) Seu número de WhatsApp com código do país e DDD, SEM o + (plus). É para o bot reconhecer você como dono.
-  "urlapi": "https://hobsidian.shop", // (Obrigatório) A URL base da API que o bot usa para seus comandos e funcionalidades.
-  "apikey": "API-KEY", // (Obrigatório) A chave de API fornecida pelo serviço (ex: Obisidian) para autenticar seu bot as funcionalidades da API.
-  "botoff": false // (Opcional) Se `true`, o bot inicia em modo desligado/inapto. Normalmente deixe como `false`.
-}
-```
 
 </details>
 
