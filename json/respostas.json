@@ -1,0 +1,23 @@
+{
+"so_adm": "*ミsó administradores podem usar esse comando⚫*",
+"so_dono": "*ミsó o meu dono pode usar esse comando⚫*",
+"marcar_alguem": "*ミé nescessário marcar um usuário para executar esse comando⚫*",
+"comando_errado": "*ミcomando não reconhecido em meu banco de dados⚫*",
+"bot_adm": "*ミpreciso ser administrador para executar esse comando⚫*",
+"so_grupo": "*ミesse comando só pode ser executado em grupos⚫*",
+"usuario_removido": "*ミusuário removido do grupo⚫*",
+"cargoadm_on": "*ミcargo de administrador concedido para usuário⚫*",
+"cargoadm_off": "*ミcargo de administrador retirado do  usuário⚫*",
+"grupo_q": "*ミescolha entre grupo on ou grupo off⚫*",
+"grupo_on": "*ミo grupo foi aberto⚫*",
+"grupo_off": "*ミo grupo foi fechado⚫*",
+"isBot": "*ミvocê não pode executar este comando em mim⚫*",
+"executado": "*ミcomando executado com sucesso⚫*",
+"textoparametro": "*ミé nescessário colocar um termo após o comando para executar essa ação⚫*",
+"marca_foto": "ミ⚠ Marque ou responda uma imagem",
+"erro": "ミdeu erro....⚫",
+"textologo": "*ミé nescessário colocar um termo após o comando para executar essa ação⚫*",
+"limiteesgoted": "⚠ *Limite diário da API excedido!*\nÉ necessário atualizar o plano ou esperar até",
+"modobrincadeira": "*O modo brincadeira precisa estar ativo.*"
+
+}

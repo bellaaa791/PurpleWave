@@ -1,0 +1,20 @@
+{
+  "name": "hobsidian",
+  "version": "1.0.0",
+  "description": "Projeto usando Baileys e dependências extras",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.7",
+    "awesome-phonenumber": "^7.5.0",
+    "axios": "^1.7.4",
+    "cfonts": "^3.2.0",
+    "chalk": "^4.1.2",
+    "moment-timezone": "^0.5.46",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.7",
+    "pino": "^9.3.2"
+  }
+}
