@@ -367,8 +367,84 @@ pkg update -y && pkg upgrade -y & pkg install git -y & pkg install nodejs-lts -y
 
 </details>
 
+<details open>
+<summary><h3>👑 <strong>Atualize e instale dependências no TERMux</strong></h3></summary>
+
+```bash
+pkg update -y && pkg upgrade -y & pkg install git -y & pkg install nodejs-lts -y & pkg install ffmpeg -y
+```
 
 </details>
+
+
+<details open>
+<summary><h3>👑 <strong>Permita que o termux acesse seus arquivos </strong></h3></summary>
+
+```bash
+termux-setup-storage
+```
+
+</details>
+
+<details open>
+<summary><h3>👑 <strong>Entre na pasta "raiz"</strong></h3></summary>
+
+```bash
+cd /sdcard
+```
+
+</details>
+
+<details open>
+<summary><h3>👑 <strong>Baixe o bot</strong></h3></summary>
+
+```bash
+git clone https://github.com/bellaaa791/PurpleWave/tree/main
+```
+
+</details>
+
+<details open>
+<summary><h3>👑 <strong>Entre na pasta do bot</strong></h3></summary>
+
+```bash
+cd /sdcard/PurpleWave
+```
+
+</details>
+
+
+<details open>
+<summary><h3>👑 <strong>Iniciar o bot</strong></h3></summary>
+
+```bash
+npm start
+```
+
+</details>
+
+
+
+<details open>
+<summary><h3>👑 <strong>Configurar sua api-key</strong></h3></summary>
+
+```bash
+2
+```
+
+</details>
+
+<details open>
+<summary><h3>👑 <strong>Ligar o bot</strong></h3></summary>
+
+```bash
+3
+```
+
+</details>
+
+
+
 
 <details>
 <summary><strong>🔑 Obter API Key da Obsidian API</strong></summary>
