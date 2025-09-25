@@ -367,15 +367,6 @@ pkg update -y && pkg upgrade -y & pkg install git -y & pkg install nodejs-lts -y
 
 </details>
 
-<details open>
-<summary><h3>👑 <strong>Atualize e instale dependências no TERMux</strong></h3></summary>
-
-```bash
-pkg update -y && pkg upgrade -y & pkg install git -y & pkg install nodejs-lts -y & pkg install ffmpeg -y
-```
-
-</details>
-
 
 <details open>
 <summary><h3>👑 <strong>Permita que o termux acesse seus arquivos </strong></h3></summary>
