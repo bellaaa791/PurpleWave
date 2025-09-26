@@ -90,11 +90,11 @@ const isBotGroupAdmins = groupAdmins.includes(BotNumber);
 
 const normalizedSender = normalizeJid(sender);
 const isGroupAdmins = groupAdmins.includes(normalizedSender);
-console.log("BotNumber =>", BotNumber);
-console.log("GroupAdmins =>", groupAdmins);
-console.log("isBotGroupAdmins =>", isBotGroupAdmins);
-console.log("Sender =>", normalizedSender);
-console.log("isGroupAdmins =>", isGroupAdmins);
+//console.log("BotNumber =>", BotNumber);
+//console.log("GroupAdmins =>", groupAdmins);
+//console.log("isBotGroupAdmins =>", isBotGroupAdmins);
+//console.log("Sender =>", normalizedSender);
+//console.log("isGroupAdmins =>", isGroupAdmins);
 // ===============================
 // Preparar argumentos
 // ===============================
