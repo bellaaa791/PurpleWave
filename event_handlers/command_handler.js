@@ -1,10 +1,18 @@
 "use strict";
 Object.defineProperty(module.exports, "__esModule", { value: true });
+function normalizeJid(jid) {
+if (!jid) return null;
+return jid
+.replace(/:.*(?=@)/, '')
+.replace('@lid', '@s.whatsapp.net')
+.replace('@c.us', '@s.whatsapp.net');
+}
 module.exports = {
 file: 'command_handler.js',
 eventNames: ['messages.upsert'],
 desc: 'Handler para processamento de comandos',
 tags: ['commands', 'plugins'],
+
 
 async start(bot, { messages }, ctx) {
 for (const info of messages || []) {
@@ -37,17 +45,9 @@ if (!mensagem) continue;
 // Remetente e grupo
 // ===============================
 const jid = info.key.remoteJid || info.key.participant || info.key.lid?._serialized;
-
 const isGroup = jid.endsWith('@g.us');
 const from = isGroup ? jid : info.key.remoteJid;
-let sender;
-if (isGroup) {
-sender = info.key.participant
-? info.key.participant.lid?._serialized || info.key.participant
-: from;
-} else {
-sender = from;
-}
+const sender = isGroup ? (info.key.participantAlt || info.key.participant).includes(':') ? (info.key.participantAlt || info.key.participant).split(':')[0] + (info.key.participantAlt ? '@s.whatsapp.net' : '@lid') : (info.key.participantAlt || info.key.participant) : info.key.remoteJid;
 
 // ===============================
 // Configurações e permissões
@@ -68,32 +68,47 @@ const groupMetadata = isGroup ? await bot.groupMetadata(from) : "";
 const groupMembers = isGroup ? groupMetadata.participants : [];
 
 function getGroupAdmins(participants) {
-const admins = [];
-for (const i of participants) {
-if (i.admin === "admin" || i.admin === "superadmin") admins.push(i.id);
-}
-return admins;
+return participants
+.filter(i => i.admin === "admin" || i.admin === "superadmin")
+.map(i => normalizeJid(i.id || i.lid?._serialized || i));
 }
 
 function getMembros(participants) {
-const membros = [];
-for (const i of participants) if (!i.admin) membros.push(i.id);
-return membros;
+return participants
+.filter(i => !i.admin)
+.map(i => normalizeJid(i.id || i.lid?._serialized || i));
 }
 
-const somembros = isGroup ? getMembros(groupMembers) : [];
 const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : [];
-const BotNumber = bot.user.id.split(":")[0] + "@s.whatsapp.net";
-const isGroupAdmins = groupAdmins.includes(sender);
+const somembros = isGroup ? getMembros(groupMembers) : [];
+
+const BotNumber = normalizeJid(bot.user?.id || bot.user?.lid?._serialized);
+if (isGroup && !groupAdmins.includes(BotNumber)) {
+groupAdmins.push(BotNumber);
+}
 const isBotGroupAdmins = groupAdmins.includes(BotNumber);
 
+const normalizedSender = normalizeJid(sender);
+const isGroupAdmins = groupAdmins.includes(normalizedSender);
+console.log("BotNumber =>", BotNumber);
+console.log("GroupAdmins =>", groupAdmins);
+console.log("isBotGroupAdmins =>", isBotGroupAdmins);
+console.log("Sender =>", normalizedSender);
+console.log("isGroupAdmins =>", isGroupAdmins);
 // ===============================
 // Preparar argumentos
 // ===============================
 const args = body.trim().split(/ +/).slice(1);
 const qo = args.join(" ");
 const q = Array.isArray(qo) ? q.join(" ") : qo;
-
+const menc_prt = info.message?.extendedTextMessage?.contextInfo?.participant;
+const menc_jid2 = info.message?.extendedTextMessage?.contextInfo?.mentionedJid;
+const menc_os2 = q.includes("@") ? menc_jid2[0] : menc_prt;
+const menc_jid = normalizeJid(menc_os2 || sender);
+const sender_ou_n = q.includes("@") ? menc_jid2?.[0] : (menc_prt || sender);
+const targetJid = normalizeJid(sender_ou_n);
+ 
+ 
 const quoted = info.message?.extendedTextMessage?.contextInfo?.quotedMessage;
 const isImagem =
 info.message?.imageMessage ||
@@ -106,10 +121,7 @@ info.message?.message?.videoMessage ||
 quoted?.videoMessage ||
 quoted?.message?.videoMessage;
 
-const menc_prt_raw = info.message?.extendedTextMessage?.contextInfo?.participant;
-const menc_prt = menc_prt_raw?._serialized || menc_prt_raw || null;
-const menc_jid = q.includes("@") ? q.replace("@", "") + "@s.whatsapp.net" : menc_prt;
-const menc_os2 = menc_jid;
+
 
 const nome = info.pushName || "";
 
@@ -158,7 +170,12 @@ dono,
 requisicaoComLimite,
 somembros,
 modobrincadeira,
-mentions
+mentions,
+BotNumber,
+groupAdmins,
+sender,
+menc_jid,
+normalizeJid
 });
 
 creategrupo();
@@ -245,7 +262,7 @@ break;
 }
 
 // ===============================
-//  Se não for comando, ignora totalmente
+//Se não for comando, ignora totalmente
 // ===============================
 if (!isCommand) continue;
 

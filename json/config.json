@@ -1,10 +1,10 @@
 {
   "criador": "⚝Tokyo🐈‍⬛",
   "prefix": "/",
-  "prefixo": false,
+  "prefixo": true,
   "bot": "PurpleWave∿",
   "criadorNumber": "553285076326",
   "urlapi": "https://hobsidian.shop",
   "apikey": "SUAKEY",
-  "botoff": true
+  "botoff": false
 }
