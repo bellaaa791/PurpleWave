@@ -288,7 +288,7 @@ console.log(`> 🔍 Procurando comando: ${comandoDigitado}`);
 // ===============================
 let bloqueados = [];
 try {
-bloqueados = JSON.parse(fs.readFileSync("./Json/bloqueados.json", "utf-8"));
+bloqueados = JSON.parse(fs.readFileSync("../../Json/bloqueados.json", "utf-8"));
 } catch (err) {
 console.error("Erro ao ler bloqueados.json:", err);
 bloqueados = [];
