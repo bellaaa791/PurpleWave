@@ -2,7 +2,7 @@
 
 module.exports = {
 nomes: ["usarprefix"],
-desc: "Ativa ou desativa o usode prefixo.",
+desc: "Ativa ou desativa o usode usarprefixo.",
 tags: ["dono", "config"],
 run: async () => {
 const { salvarConfig, lerConfig } = require("../../../config.js");
@@ -10,26 +10,26 @@ const { salvarConfig, lerConfig } = require("../../../config.js");
 const configAtual = lerConfig();
 
 if (!args[0]) {
-const estado = configAtual.prefixo ? "✅ Ativado" : "❌ Desativado";
-return enviar(`Modo prefixo atualmente: ${estado}\nUse: ${prefix}prefixo on/off`);
+const estado = configAtual.usarprefixo ? "✅ Ativado" : "❌ Desativado";
+return enviar(`Modo usarprefixo atualmente: ${estado}\nUse: ${prefix}usarprefixo on/off`);
 }
 
 const opcao = args[0].toLowerCase();
 
 if (opcao === "on") {
-if (salvarConfig({ prefixo: true })) {
-return enviar("✅ prefixo ativado!");
+if (salvarConfig({ usarprefixo: true })) {
+return enviar("✅ usarprefixo ativado!");
 } else {
-return enviar("❌ Erro ao ativar prefixo.");
+return enviar("❌ Erro ao ativar usarprefixo.");
 }
 } else if (opcao === "off") {
-if (salvarConfig({ prefixo: false })) {
-return enviar("✅ prefixo desativado!");
+if (salvarConfig({ usarprefixo: false })) {
+return enviar("✅ usarprefixo desativado!");
 } else {
-return enviar("❌ Erro ao desativar prefixo.");
+return enviar("❌ Erro ao desativar usarprefixo.");
 }
 } else {
-return enviar(`⚠ Opção inválida. Use: ${prefix}prefixo on|off`);
+return enviar(`⚠ Opção inválida. Use: ${prefix}usarprefixo on|off`);
 }
 },
 };

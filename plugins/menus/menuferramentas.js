@@ -27,6 +27,7 @@ const menu = `
 ┃╰─»${prefix}ping 
 ┃╰─»${prefix}dados
 ┃╰─»${prefix}tourl <@imagem>
+┃╰─»${prefix}sticker <@imagem/video>
 ╰─⚝─⚝─⚝─⚝─⚝─⚝─⚝
 `;
 await bot.sendMessage(

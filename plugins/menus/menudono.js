@@ -25,11 +25,14 @@ const menu = `
 ┃╰─»${prefix}setnomebot <nome bot>
 ┃╰─»${prefix}setnomedono <nome dono>
 ┃╰─»${prefix}setnumerodono <número dono>
+┃╰─»${prefix}blockcmd <comando>
+┃╰─»${prefix}unblockcmd <comando>
 ┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
 ┃🔑 ATIVAÇÕES 
 ┃╰─»${prefix}bangp
 ┃╰─»${prefix}botoff <on/off>
 ┃╰─»${prefix}usarprefix <on/off>
+┃╰─»${prefix}antipv <on/off>
 ╰─⚝─⚝─⚝─⚝─⚝─⚝─⚝
 `;
 await bot.sendMessage(

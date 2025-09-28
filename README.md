@@ -390,7 +390,7 @@ cd /sdcard
 <summary><h3>👑 <strong>Baixe o bot</strong></h3></summary>
 
 ```bash
-git clone https://github.com/bellaaa791/PurpleWave/tree/main
+git clone https://github.com/bellaaa791/PurpleWave
 ```
 
 </details>
@@ -486,7 +486,7 @@ npm start
 
 ```bash
 # 🍴 1. Fork o projeto
-git clone https://github.com/SEU-USUARIO/PurpleWave.git
+git clone https://github.com/bellaaa791/PurpleWave.git
 
 # 🌿 2. Crie sua branch
 git checkout -b feature/MinhaNovaFeature

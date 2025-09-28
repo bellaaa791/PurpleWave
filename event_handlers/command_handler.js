@@ -2,10 +2,13 @@
 Object.defineProperty(module.exports, "__esModule", { value: true });
 function normalizeJid(jid) {
 if (!jid) return null;
-return jid
-.replace(/:.*(?=@)/, '')
-.replace('@lid', '@s.whatsapp.net')
-.replace('@c.us', '@s.whatsapp.net');
+let id = jid.replace(/:.*(?=@)/, ''); 
+if (id.endsWith('@lid')) {
+id = id.replace('@lid', '@s.whatsapp.net');
+} else if (!id.endsWith('@s.whatsapp.net')) {
+id += '@s.whatsapp.net';
+}
+return id;
 }
 module.exports = {
 file: 'command_handler.js',
@@ -44,57 +47,84 @@ if (!mensagem) continue;
 // ===============================
 // Remetente e grupo
 // ===============================
-const jid = info.key.remoteJid || info.key.participant || info.key.lid?._serialized;
-const isGroup = jid.endsWith('@g.us');
-const from = isGroup ? jid : info.key.remoteJid;
-const sender = isGroup ? (info.key.participantAlt || info.key.participant).includes(':') ? (info.key.participantAlt || info.key.participant).split(':')[0] + (info.key.participantAlt ? '@s.whatsapp.net' : '@lid') : (info.key.participantAlt || info.key.participant) : info.key.remoteJid;
+const from = info.key.remoteJid || '';
+const isGroup = from.includes('@g.us');
+let participant = '';
+if (info.key.participant) {
+if (info.key.participant.includes('@s.whatsapp.net')) {
+participant = info.key.participant;
+} 
+else if (info.key.participantPn) {
+participant = info.key.participantPn;
+} 
+else {
+participant = info.key.participant.includes(':')
+? info.key.participant.split(':')[0] + '@s.whatsapp.net'
+: info.key.participant + '@s.whatsapp.net';
+}
+} else {
+participant = from; 
+}
+
+let sender = '';
+if (info.key.participantPn) {
+sender = normalizeJid(info.key.participantPn);
+} 
+else if (info.key.participant && info.key.participant.includes('@s.whatsapp.net')) {
+sender = normalizeJid(info.key.participant);
+} 
+else if (info.key.participant) {
+sender = normalizeJid(info.key.participant.split(':')[0] + '@s.whatsapp.net');
+} 
+else if (info.key.fromMe) {
+sender = normalizeJid(bot.user?.id || bot.user?.lid?._serialized);
+} 
+else {
+sender = normalizeJid(info.key.remoteJid);
+}
 
 // ===============================
 // Configurações e permissões
 // ===============================
-const { lerConfig, lergrupo, requisicaoComLimite } = require("../config.js");
+const fs = require('fs');
+const { lerConfig, lergrupo, requisicaoComLimite, getGrupoConfig } = require("../config.js");
 const { creategrupo } = require("../utils/grupo.js");
 const config = lerConfig();
 const numerodono = config.criadorNumber + "@s.whatsapp.net";
 const dono = sender === numerodono || info.key.fromMe;
 
-if (config.botoff && !dono) continue;
-
-const grupoConfig = isGroup ? lergrupo(from) : {};
+let grupoConfig = {};
 
 if (grupoConfig.bangp && !dono) continue;
 
 const groupMetadata = isGroup ? await bot.groupMetadata(from) : "";
 const groupMembers = isGroup ? groupMetadata.participants : [];
-
 function getGroupAdmins(participants) {
 return participants
-.filter(i => i.admin === "admin" || i.admin === "superadmin")
-.map(i => normalizeJid(i.id || i.lid?._serialized || i));
+.filter(p => p.admin === "admin" || p.admin === "superadmin")
+.map(p => {
+
+const jidReal = p.jid || p.participantPn || (p.participant.includes('@') ? p.participant.split(':')[0] + '@s.whatsapp.net' : p.participant + '@s.whatsapp.net');
+return normalizeJid(jidReal);
+});
 }
 
 function getMembros(participants) {
 return participants
-.filter(i => !i.admin)
-.map(i => normalizeJid(i.id || i.lid?._serialized || i));
+.filter(p => !p.admin)
+.map(p => {
+const jidReal = p.jid || p.participantPn || (p.participant.includes('@') ? p.participant.split(':')[0] + '@s.whatsapp.net' : p.participant + '@s.whatsapp.net');
+return normalizeJid(jidReal);
+});
 }
-
 const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : [];
 const somembros = isGroup ? getMembros(groupMembers) : [];
-
-const BotNumber = normalizeJid(bot.user?.id || bot.user?.lid?._serialized);
-if (isGroup && !groupAdmins.includes(BotNumber)) {
-groupAdmins.push(BotNumber);
-}
-const isBotGroupAdmins = groupAdmins.includes(BotNumber);
-
 const normalizedSender = normalizeJid(sender);
-const isGroupAdmins = groupAdmins.includes(normalizedSender);
-//console.log("BotNumber =>", BotNumber);
-//console.log("GroupAdmins =>", groupAdmins);
-//console.log("isBotGroupAdmins =>", isBotGroupAdmins);
-//console.log("Sender =>", normalizedSender);
-//console.log("isGroupAdmins =>", isGroupAdmins);
+const BotNumber = normalizeJid(bot.user?.id || bot.user?.lid?._serialized);
+if (isGroup && !groupAdmins.includes(BotNumber)) groupAdmins.push(BotNumber);
+
+const isGroupAdmins = groupAdmins.includes(sender);
+const isBotGroupAdmins = groupAdmins.includes(normalizeJid(bot.user?.id));//console.
 // ===============================
 // Preparar argumentos
 // ===============================
@@ -103,7 +133,9 @@ const qo = args.join(" ");
 const q = Array.isArray(qo) ? q.join(" ") : qo;
 const menc_prt = info.message?.extendedTextMessage?.contextInfo?.participant;
 const menc_jid2 = info.message?.extendedTextMessage?.contextInfo?.mentionedJid;
-const menc_os2 = q.includes("@") ? menc_jid2[0] : menc_prt;
+const menc_os2 = q.includes("@") 
+? (Array.isArray(menc_jid2) && menc_jid2.length > 0 ? menc_jid2[0] : null) 
+: menc_prt;
 const menc_jid = normalizeJid(menc_os2 || sender);
 const sender_ou_n = q.includes("@") ? menc_jid2?.[0] : (menc_prt || sender);
 const targetJid = normalizeJid(sender_ou_n);
@@ -143,11 +175,17 @@ await bot.sendMessage(from, { video: { url: video }, caption: desc }, { quoted: 
 
 async function mentions(text, users, quoted = false) {
 if (!Array.isArray(users) || users.length === 0) return;
-const mentionsList = users.map(u => u);
-await bot.sendMessage(from, { text, mentions: mentionsList }, { quoted: quoted ? info : undefined });
+const mentionsList = users.map(u => normalizeJid(u));
+
+await bot.sendMessage(from, { text, mentions: mentionsList }, { 
+quoted: quoted ? info : undefined 
+});
 }
 
-let modobrincadeira = grupoConfig?.modobrincadeira;
+if (isGroup) {
+  grupoConfig = await getGrupoConfig(from); 
+}
+let modobrincadeira = grupoConfig.modobrincadeira;
 
 Object.assign(ctx, {
 info,
@@ -175,7 +213,8 @@ BotNumber,
 groupAdmins,
 sender,
 menc_jid,
-normalizeJid
+normalizeJid,
+config
 });
 
 creategrupo();
@@ -183,6 +222,13 @@ creategrupo();
 // ===============================
 // Função para executar comandos
 // ===============================
+
+if (config.botoff && !dono) continue;
+if (!isGroup && config.antipv && !dono) {
+console.log(`🚫 Mensagem privada bloqueada de ${sender}`);
+continue; 
+}
+
 async function executarComando(comandoDigitado) {
 try {
 if (!ctx.fs.existsSync(ctx.pluginsDir)) return false;
@@ -209,72 +255,62 @@ console.error("❌ Erro ao executar comando:", err);
 return false;
 }
 }
-
+//NÃO MEXER
 // ===============================
-// Detectar comando
-// ===============================
- // ===============================
 // 1️⃣ Extrair texto da mensagem
 // ===============================
-const comandoRaw =
-mensagem.conversation?.trim() ||
-mensagem.extendedTextMessage?.text?.trim();
-
-// Se não tem texto, não faz absolutamente nada
-if (!comandoRaw) continue;
-
-// ===============================
-// 2️⃣ Determinar se é comando
-// ===============================
-// ===============================
-// 2️⃣ Determinar se é comando
-// ===============================
 let isCommand = false;
-let acao = comandoRaw;
 let comandoDigitado = "";
-
-// BOT COM PREFIXO
-if (config.prefixo && comandoRaw.startsWith(config.prefixo)) {
-isCommand = true;
-acao = comandoRaw.slice(config.prefixo.length).trim();
-comandoDigitado = acao.split(" ")[0].toLowerCase();
-}
-
-// BOT SEM PREFIXO
-else if (!config.prefixo) {
-comandoDigitado = comandoRaw.split(" ")[0].toLowerCase();
-
-const arquivosJs = ctx.puxararquivos(ctx.pluginsDir);
-for (const file of arquivosJs) {
-delete require.cache[require.resolve(file)];
-const comandoModule = require(file);
-if (!comandoModule.nomes || !comandoModule.run) continue;
-
-const nomesValidos = Array.isArray(comandoModule.nomes)
-? comandoModule.nomes.map(n => n.toLowerCase())
-: [comandoModule.nomes.toLowerCase()];
-
-if (nomesValidos.some(nome => comandoDigitado === nome)) {
-isCommand = true;
-break;
-}
-}
-}
+const comandoRaw = (mensagem.conversation || mensagem.extendedTextMessage?.text || "").trim();
+if (!comandoRaw) continue; 
 
 // ===============================
-//Se não for comando, ignora totalmente
+// 2️⃣ Detectar comando
 // ===============================
+if (config.usarprefixo) {
+if (comandoRaw.startsWith(config.prefix)) {
+const semPrefixo = comandoRaw.slice(config.prefix.length).trim();
+if (semPrefixo) {
+comandoDigitado = semPrefixo.split(/\s+/)[0].toLowerCase(); 
+isCommand = true;
+}
+}
+} else {
+comandoDigitado = comandoRaw.split(/\s+/)[0].toLowerCase();
+isCommand = true;
+}
 if (!isCommand) continue;
 
-// ===============================
-// 4️⃣Só agora loga e executa
-// ===============================
 console.log(`> 🔍 Procurando comando: ${comandoDigitado}`);
+
+// ===============================
+// 3️⃣ Verificar comandos bloqueados
+// ===============================
+let bloqueados = [];
+try {
+bloqueados = JSON.parse(fs.readFileSync("./Json/bloqueados.json", "utf-8"));
+} catch (err) {
+console.error("Erro ao ler bloqueados.json:", err);
+bloqueados = [];
+}
+
+if (bloqueados.includes(comandoDigitado)) {
+console.log(`🚫 Comando bloqueado: ${comandoDigitado}`);
+await enviar("❌ Este comando foi bloqueado pelo meu dono.");
+continue; // não executa nada
+}
+
+// ===============================
+// 4️⃣ Executar comando
+// ===============================
 const encontrado = await executarComando(comandoDigitado);
 if (!encontrado) {
 console.log(`❌ Nenhum comando com nome "${comandoDigitado}" foi encontrado.`);
 }
 
+
+
+//NAOMEXER
 } 
 } 
 }; 

@@ -3,8 +3,9 @@
 // Inspiração: Takeshi-bot
 // ==============================
 const fs = require("fs");
+const axios = require('axios')
 const path = require("path");
-
+const { getGrupoConfig } = require('./utils/grupo.js')
 const configPath = path.join(__dirname, "./json/config.json");
 const { creategrupo } = require("./utils/grupo");
 function getConfig() {
@@ -94,4 +95,4 @@ return { success: false, data: null };
 }
 }
 
-module.exports = { getConfig, lerConfig, salvarConfig,lergrupo, requisicaoComLimite };
+module.exports = { getConfig, lerConfig, salvarConfig,lergrupo, requisicaoComLimite, getGrupoConfig };
