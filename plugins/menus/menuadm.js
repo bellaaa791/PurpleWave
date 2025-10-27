@@ -5,34 +5,61 @@ run: async () => {
 aumentartotalcmds();
 aumentarcmdsgeral();
 const menu = `
-╭─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃🐈‍⬛»Bot: *${NomeDoBot}*
-┃╰─»Usuário: *${nome}*
-┃╰─»Minha Versão: *2.0*
-┃╰─»Biblioteca: *Baileys MD*
-┃╰─»Dono: *${criador}*
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃⚙️𝘐𝘕𝘍𝘖𝘚 
-┃╰─»${prefix}Ping
-┃╰─»${prefix}Dados
-┃╰─»${prefix}Infodono
-┃╰─»${prefix}Infocmd <comando>
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃👑 ADMINISTRAÇÃO
-┃╰─»${prefix}ban <@user>
-┃╰─»${prefix}marcar <@user>
-┃╰─»${prefix}hidetag <mensagem>
-┃╰─»${prefix}promover <@user>
-┃╰─»${prefix}rebaixar <@user>
-┃╰─»${prefix}nomegp <nome>
-┃╰─»${prefix}descgp <descrição>
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃🔑 ATIVAÇÕES 
-┃╰─»${prefix}antilinkgp
-┃╰─»${prefix}antilinkchannel
-┃╰─»${prefix}bemvindo
-┃╰─»${prefix}bemvindo2
-╰─⚝─⚝─⚝─⚝─⚝─⚝─⚝
+╭━━⪩ INFOS ⪨━━
+▢ • Bot: *${NomeDoBot}*
+▢ • Usuário: ${nome}
+▢ • Dono: *${criador}*
+▢ • Minha Versão: *${version}*
+▢ • Biblioteca: *Baileys MD*
+▢ • Para detalhes de um comando:
+▢ • ${prefix}infocmd [nome do comando]
+╰━━─「💜」─━━
+
+╭━━⪩ INFOS ⪨━━
+▢ • ${prefix}Ping
+▢ • ${prefix}Dados
+▢ • ${prefix}Infodono
+▢ • ${prefix}Infocmd <comando>
+╰━━─「💜」─━━
+
+╭━━⪩ ADMINISTRACAO⪨━━
+▢ • ${prefix}ban <@user>
+▢ • ${prefix}marcar <@user>
+▢ • ${prefix}hidetag <mensagem>
+▢ • ${prefix}promover <@user>
+▢ • ${prefix}rebaixar <@user>
+▢ • ${prefix}nomegp <nome>
+▢ • ${prefix}descgp <descrição>
+▢ • ${prefix}setlimite <valor>
+▢ • ${prefix}rg_mensagem
+▢ • ${prefix}del_mensagem
+▢ • ${prefix}list_mensagem
+▢ • ${prefix}help_rgmensagem
+▢ • ${prefix}veruser @user
+▢ • ${prefix}resetrank
+▢ • ${prefix}addpalavra
+▢ • ${prefix}removepalavra
+▢ • ${prefix}palavras
+▢ • ${prefix}resetpalavras
+╰━━─「💜」─━━
+
+╭━━⪩ ATIVACOES ⪨━━
+▢ • ${prefix}antilinkgp
+▢ • ${prefix}antivideo
+▢ • ${prefix}antisticker
+▢ • ${prefix}antiimg
+▢ • ${prefix}anticatalogo
+▢ • ${prefix}antilocalizacao
+▢ • ${prefix}anticontato
+▢ • ${prefix}antihidetag
+▢ • ${prefix}antidocumento
+▢ • ${prefix}limitecaracteres
+▢ • ${prefix}antistatus
+▢ • ${prefix}rankusers
+▢ • ${prefix}bemvindo
+▢ • ${prefix}bemvindo2
+▢ • ${prefix}antipalavra 
+╰━━─「💜」─━━
 `;
 await bot.sendMessage(
 from,

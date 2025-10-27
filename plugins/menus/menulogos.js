@@ -5,25 +5,29 @@ run: async () => {
 aumentartotalcmds();
 aumentarcmdsgeral();
 const menu = `
-╭─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃🐈‍⬛»Bot: *${NomeDoBot}*
-┃╰─»Usuário: *${nome}*
-┃╰─»Minha Versão: *2.0*
-┃╰─»Biblioteca: *Baileys MD*
-┃╰─»Dono: *${criador}*
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃⚙️𝘐𝘕𝘍𝘖𝘚 
-┃╰─»${prefix}Ping
-┃╰─»${prefix}Dados
-┃╰─»${prefix}Infodono
-┃╰─»${prefix}Infocmd <comando>
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃🖼️ LOGOS
-┃╰─»${prefix}dragonball
-┃╰─»${prefix}luzneon
-┃╰─»${prefix}vidro
-┃╰─»${prefix}blackpink
-╰─⚝─⚝─⚝─⚝─⚝─⚝─⚝
+╭━━⪩ INFOS ⪨━━
+▢ • Bot: *${NomeDoBot}*
+▢ • Usuário: ${nome}
+▢ • Dono: *${criador}*
+▢ • Minha Versão: *${version}*
+▢ • Biblioteca: *Baileys MD*
+▢ • Para detalhes de um comando:
+▢ • ${prefix}infocmd [nome do comando]
+╰━━─「💜」─━━
+
+╭━━⪩ INFOS ⪨━━
+▢ • ${prefix}Ping
+▢ • ${prefix}Dados
+▢ • ${prefix}Infodono
+▢ • ${prefix}Infocmd <comando>
+╰━━─「💜」─━━
+
+╭━━⪩ LOGOS ⪨━━
+▢ • ${prefix}dragonball
+▢ • ${prefix}luzneon
+▢ • ${prefix}vidro
+▢ • ${prefix}blackpink
+╰━━─「💜」─━━
 `;
 await bot.sendMessage(
 from,

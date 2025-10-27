@@ -1,22 +1,33 @@
+"use strict";
 module.exports = {
 nomes: ["antilink"],
-desc: ["Ativa ou desativa o sistema de antilink no grupo!"],
-uso: [""],
+desc: "Ativa ou desativa o sistema de antilink no grupo",
+tags: ["grupo", "config"],
 run: async () => {
-aumentartotalcmds();
-aumentarcmdsgeral();
 if (!isGroup) return enviar(resposta.so_grupo);
 if (!isGroupAdmins) return enviar(resposta.so_adm);
-try {
-const novaConfig = await togglegrupoconfig(from, "antilinkgp");
-if (novaConfig.antilinkgp) {
-enviar("✅ O *antilink de grupo* foi *ativado* com sucesso!");
-} else {
-enviar("❌ O *antilink de grupo* foi *desativado* com sucesso!");
+const configAtual = lergrupo(from);
+if (!q) {
+const estado = configAtual.antilinkgp ? "✅ Ativado" : "❌ Desativado";
+return enviar(`⛔ Antilink atualmente: ${estado}\nUse: ${prefix}antilink on/off`);
 }
-} catch (e) {
-console.error(e);
-enviar("⚠️ Ocorreu um erro ao tentar alterar a configuração do grupo.");
+
+const opcao = args[0].toLowerCase();
+
+if (opcao === "on") {
+if (configAtual.antilinkgp) {
+return enviar("⚠ O antilink já está ativado!");
+}
+await togglegrupoconfig(from, "antilinkgp");
+return enviar("✅ Antilink ativado no grupo!");
+} else if (opcao === "off") {
+if (!configAtual.antilinkgp) {
+return enviar("⚠ O antilink já está desativado!");
+}
+await togglegrupoconfig(from, "antilinkgp");
+return enviar("✅ Antilink desativado no grupo!");
+} else {
+return enviar(`⚠ Opção inválida. Use: ${prefix}antilink on|off`);
 }
 },
 };

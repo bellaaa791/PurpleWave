@@ -15,6 +15,7 @@
     "moment-timezone": "^0.5.46",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.7",
+    "node-upload-images": "^1.0.1",
     "pino": "^9.3.2"
   }
 }

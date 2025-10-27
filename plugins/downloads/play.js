@@ -50,8 +50,8 @@ Origin: "https://hobsidian.shop",
 });
 
 const data2 = response2.data;
-const audio = data2?.resultado?.texto.dlink || null;
-
+const audio = data2?.dlink;
+console.log(data2)
 const textoresultado = `
 *🎬 Título:* ${video.title || "não encontrado"}
 *📺 Canal:* ${video.author?.name || "não encontrado"}

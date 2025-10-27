@@ -1,0 +1,68 @@
+const axios = require("axios");
+const fs = require("fs");
+const { exec } = require("child_process");
+const path = require("path");
+
+module.exports = {
+  nomes: ["attp"],
+  desc: ["Transforma um texto normal em figurinha colorida!"],
+  uso: ["tokyo"],
+  run: async () => {
+    aumentartotalcmds();
+    aumentarcmdsgeral();
+
+    if (!q) return enviar(resposta.textoparametro);
+
+    try {
+      const url = `${urlapi}/api/canvas/attp?apikey=${apikey}&query=${encodeURIComponent(q)}`;
+      console.log("[ATTP] Requisitando URL:", url);
+
+      const response = await axios.get(url, { responseType: "arraybuffer" });
+      console.log("[ATTP] Tipo:", response.headers["content-type"]);
+      console.log("[ATTP] Tamanho:", response.data.length);
+
+      if (!response.data || response.data.length < 100) {
+        console.warn("[ATTP] GIF vazio ou inválido!");
+        return enviar("*⚠ Nenhum resultado encontrado!*");
+      }
+
+      // 📁 Cria a pasta temp se não existir
+      const tempDir = path.join(__dirname, "../temp");
+      if (!fs.existsSync(tempDir)) {
+        fs.mkdirSync(tempDir, { recursive: true });
+        console.log("[ATTP] Pasta temp criada:", tempDir);
+      }
+
+      // 🧩 Caminhos dos arquivos temporários
+      const tmpGif = path.join(tempDir, `attp_${Date.now()}.gif`);
+      const tmpWebp = path.join(tempDir, `attp_${Date.now()}.webp`);
+
+      // 💾 Salva o GIF baixado
+      fs.writeFileSync(tmpGif, response.data);
+
+      console.log("[ATTP] Convertendo GIF para WebP...");
+      await new Promise((resolve, reject) => {
+        exec(
+          `ffmpeg -i "${tmpGif}" -vcodec libwebp -filter:v fps=fps=15 -lossless 1 -qscale 50 -preset default -loop 0 -an -vsync 0 -s 512:512 "${tmpWebp}"`,
+          (err) => {
+            if (err) reject(err);
+            else resolve();
+          }
+        );
+      });
+
+      // 📤 Lê o resultado da conversão e envia
+      const webpBuffer = fs.readFileSync(tmpWebp);
+      await bot.sendMessage(from, { sticker: webpBuffer }, { quoted: info });
+
+      console.log("[ATTP] Figurinha enviada com sucesso!");
+
+      // 🧹 Limpa os arquivos temporários
+      fs.unlinkSync(tmpGif);
+      fs.unlinkSync(tmpWebp);
+    } catch (e) {
+      console.error("[ATTP] Erro ao processar attp:", e?.response?.data || e);
+      enviar(resposta.erro);
+    }
+  },
+};

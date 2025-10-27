@@ -1,22 +1,37 @@
+"use strict";
+const { togglegrupoconfig, getGrupoConfig } = require("../../../utils/grupo.js");
+
 module.exports = {
 nomes: ["bemvindo"],
-desc: ["Ativa ou desativa o sistema de bem-vindo no grupo!"],
-uso: [""],
+desc: "Ativa ou desativa o sistema de bem-vindo no grupo",
+tags: ["grupo", "config"],
 run: async () => {
-aumentartotalcmds();
-aumentarcmdsgeral();
+const configAtual = await getGrupoConfig(from);
+
 if (!isGroup) return enviar(resposta.so_grupo);
 if (!isGroupAdmins) return enviar(resposta.so_adm);
-try {
-const novaConfig = await togglegrupoconfig(from, "bemvindo");
-if (novaConfig.bemvindo) {
-enviar("✅ O *bem-vindo* foi *ativado* com sucesso!");
-} else {
-enviar("❌ O *bem-vindo* foi *desativado* com sucesso!");
+
+if (!q) {
+const estado = configAtual.bemvindo ? "✅ Ativado" : "❌ Desativado";
+return enviar(`Bem-vindo atualmente: ${estado}\nUse: ${prefix}bemvindo on/off`);
 }
-} catch (e) {
-console.error(e);
-enviar("⚠️ Ocorreu um erro ao tentar alterar a configuração do grupo.");
+
+const opcao = args[0].toLowerCase();
+
+if (opcao === "on") {
+if (configAtual.bemvindo) return enviar("⚠ O bem-vindo já está ativado!");
+await togglegrupoconfig(from, "bemvindo");
+return enviar("✅ Bem-vindo ativado no grupo!");
+} 
+
+else if (opcao === "off") {
+if (!configAtual.bemvindo) return enviar("⚠ O bem-vindo já está desativado!");
+await togglegrupoconfig(from, "bemvindo");
+return enviar("✅ Bem-vindo desativado no grupo!");
+} 
+
+else {
+return enviar(`⚠ Opção inválida. Use: ${prefix}bemvindo on|off`);
 }
 },
 };

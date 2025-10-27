@@ -5,30 +5,34 @@ run: async () => {
 aumentartotalcmds();
 aumentarcmdsgeral();
 const menu = `
-╭─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃🐈‍⬛»Bot: *${NomeDoBot}*
-┃╰─»Usuário: *${nome}*
-┃╰─»Minha Versão: *2.0*
-┃╰─»Biblioteca: *Baileys MD*
-┃╰─»Dono: *${criador}*
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃⚙️𝘐𝘕𝘍𝘖𝘚 
-┃╰─»${prefix}Ping
-┃╰─»${prefix}Dados
-┃╰─»${prefix}Infodono
-┃╰─»${prefix}Infocmd <comando>
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃🎥 DOWNLOADS
-┃╰─»${prefix}play <nome>
-┃╰─»${prefix}youtubemp3 <link>
-┃╰─»${prefix}youtubemp4 <link>
-┃╰─»${prefix}tiktokmp4 <link>
-┃╰─»${prefix}pinterest <link>
-┃╰─»${prefix}pinterest2 <link>
-┃╰─»${prefix}pinterest3 <link>
-┃╰─»${prefix}facebook* <link>
-┃╰─»${prefix}instamp4* <link>
-╰─⚝─⚝─⚝─⚝─⚝─⚝─⚝
+╭━━⪩ INFOS ⪨━━
+▢ • Bot: *${NomeDoBot}*
+▢ • Usuário: ${nome}
+▢ • Dono: *${criador}*
+▢ • Minha Versão: *${version}*
+▢ • Biblioteca: *Baileys MD*
+▢ • Para detalhes de um comando:
+▢ • ${prefix}infocmd [nome do comando]
+╰━━─「💜」─━━
+
+╭━━⪩ INFOS ⪨━━
+▢ • ${prefix}Ping
+▢ • ${prefix}Dados
+▢ • ${prefix}Infodono
+▢ • ${prefix}Infocmd <comando>
+╰━━─「💜」─━━
+
+╭━━⪩ DOWNLOADS ⪨━━
+▢ • ${prefix}play <nome>
+▢ • ${prefix}youtubemp3 <link>
+▢ • ${prefix}youtubemp4 <link>
+▢ • ${prefix}tiktokmp4 <link>
+▢ • ${prefix}pinterest <link>
+▢ • ${prefix}pinterest2 <link>
+▢ • ${prefix}pinterest3 <link>
+▢ • ${prefix}facebook* <link>
+▢ • ${prefix}instamp4* <link>
+╰━━─「💜」─━━
 `;
 await bot.sendMessage(
 from,

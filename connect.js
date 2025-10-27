@@ -1,6 +1,5 @@
 // ==============================
 //Créditos: Tokyo (DAKI INFOS)
-// Inspiração: Takeshi-bot
 // ==============================
 const { getConfig } = require("./config");
 const pino = require("pino");
@@ -25,9 +24,9 @@ getRandomValues: (arr) => crypto.randomFillSync(arr),
 
 const baileys = await import("@whiskeysockets/baileys");
     const { useMultiFileAuthState, Browsers } = baileys;
-const { version } = await baileys.fetchLatestBaileysVersion();
 
-console.log(`[BOT] Baileys versão: ${version.join(".")}`);
+
+
 
 const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
 const msgRetryCounterCache = new NodeCache();
@@ -36,6 +35,7 @@ const bot = baileys.makeWASocket({
 logger: pino({ level: "silent" }),
 printQRInTerminal: false,
 browser: Browsers.ubuntu("Chrome"),
+version: [ 2, 3000, 1027934701 ],
 auth: {
 creds: state.creds,
 keys: baileys.makeCacheableSignalKeyStore(

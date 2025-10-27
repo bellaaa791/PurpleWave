@@ -1,6 +1,5 @@
 // ==============================
 //Créditos: Tokyo (DAKI INFOS)
-// Inspiração: Takeshi-bot
 // ==============================
 const moment = require("moment-timezone");
 const path = require("path");

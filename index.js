@@ -1,6 +1,5 @@
 // ==============================
 //Créditos: Tokyo (DAKI INFOS)
-// Inspiração: Takeshi-bot
 // ==============================
 
 

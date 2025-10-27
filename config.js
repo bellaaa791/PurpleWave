@@ -1,6 +1,5 @@
 // ==============================
 //Créditos: Tokyo (DAKI INFOS)
-// Inspiração: Takeshi-bot
 // ==============================
 const fs = require("fs");
 const axios = require('axios')
@@ -53,7 +52,7 @@ function lergrupo(grupoid) {
 if (!grupoid.endsWith('@g.us')) {
 return {};
 }
-const configPath = path.join(__dirname, `./utils/Json/grupos/${grupoid}.json`);
+const configPath = path.join(__dirname, `./utils/json/grupos/${grupoid}.json`);
 try {
 const data = fs.readFileSync(configPath, "utf8"); 
 return JSON.parse(data);

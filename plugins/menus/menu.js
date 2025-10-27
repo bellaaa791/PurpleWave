@@ -5,29 +5,34 @@ run: async () => {
 aumentartotalcmds();
 aumentarcmdsgeral();
 const menu = `
-╭─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃🐈‍⬛»Bot: *${NomeDoBot}*
-┃╰─»Usuário: *${nome}*
-┃╰─»Minha Versão: *2.0*
-┃╰─»Biblioteca: *Baileys MD*
-┃╰─»Dono: *${criador}*
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃📄𝘓𝘐𝘚𝘛𝘈 𝘋𝘌 𝘔𝘌𝘕𝘜𝘚
-┃╰─»${prefix}Menudono
-┃╰─»${prefix}Menuadm
-┃╰─»${prefix}Menuias
-┃╰─»${prefix}Menudonwloads
-┃╰─»${prefix}Menuferramentas
-┃╰─»${prefix}Menupesquisas
-┃╰─»${prefix}Menulogos
-┃╰─»${prefix}Menubrincadeiras
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃⚙️𝘐𝘕𝘍𝘖𝘚 
-┃╰─»${prefix}Ping
-┃╰─»${prefix}Dados
-┃╰─»${prefix}Infodono
-┃╰─»${prefix}Infocmd <comando>
-╰─⚝─⚝─⚝─⚝─⚝─⚝─⚝
+╭━━⪩ INFOS ⪨━━
+▢ • Bot: *${NomeDoBot}*
+▢ • Usuário: ${nome}
+▢ • Dono: *${criador}*
+▢ • Minha Versão: *${version}*
+▢ • Biblioteca: *Baileys MD*
+▢ • Para detalhes de um comando:
+▢ • ${prefix}infocmd [nome do comando]
+╰━━─「💜」─━━
+
+╭━━⪩ MENUS ⪨━━
+▢ • ${prefix}Menudono
+▢ • ${prefix}Menuadm
+▢ • ${prefix}Menuias
+▢ • ${prefix}Menudonwloads
+▢ • ${prefix}Menuferramentas
+▢ • ${prefix}Menupesquisas
+▢ • ${prefix}Menulogos
+▢ • ${prefix}Menustalks
+▢ • ${prefix}Menubrincadeiras
+╰━━─「💜」─━━
+
+╭━━⪩ INFOS ⪨━━
+▢ • ${prefix}Ping
+▢ • ${prefix}Dados
+▢ • ${prefix}Infodono
+▢ • ${prefix}Infocmd <comando>
+╰━━─「💜」─━━
 `;
 await bot.sendMessage(
 from,
